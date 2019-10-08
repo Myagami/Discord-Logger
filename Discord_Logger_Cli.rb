@@ -2,4 +2,7 @@
 
 require_relative 'Discord_Logger'
 
-DisLog = Discord_Logger.new
+DisLog = Discord_Logger.new("test")
+
+
+
