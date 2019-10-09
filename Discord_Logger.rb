@@ -8,6 +8,7 @@ class Discord_Logger
     @HTTP_Connect
     @Content
     @UserName
+    @@EmbedCon = []
     def initialize(url)
        puts "Discord Logger Lib" 
        @URI = URI.parse(url)
@@ -15,33 +16,39 @@ class Discord_Logger
        @HTTP_Connect.use_ssl = true
     end
 
-    def SetContent(content)
+    def SetContent(content) #POST Message
         @Content = content
     end
 
-    def SetUserName(name)
+    def SetUserName(name) # Discord POST User Name
         @UserName = name
     end
 
-    def Embed_MSG
-
+    def EmbedCreate # Create Embed message
+        @@EmbedCon[@@EmbedCon.length] = {}
+        
+        return @@EmbedCon.length.to_i - 1
     end
 
-    def GetParam
+    def SetEmbedParam(path,key,value)
+        @@EmbedCon[path][key] = value
+    end
+
+    def GetParam # Set Param View
         puts "UserName:"+@UserName
         puts "Content:"+@Content.to_s
-        
     end
 
-
-
-    def Send
-        @HTTP_Connect.start do 
+    def Send #Sending Discord API
+        res = @HTTP_Connect.start do 
             req = Net::HTTP::Post.new(@URI.path)
             req["Content-Type"] = "application/json"
             ts = {#"content":"#{@Content.to_s.gsub(/\\n/,"\n")}",
                     "username":"#{@UserName}",
-                    "embeds":[{
+                    "embeds":@@EmbedCon
+=begin
+                    "embeds":[
+                        {
                             "title":"SCP-040-JP - ねこです よろしくおねがいします",
                             "description":"SCP-JP 当該報告書ページ",
                             "url":"http://ja.scp-wiki.net",
@@ -51,7 +58,6 @@ class Discord_Logger
                             "author":{
                                 "name":"SCP-040-JP",
                                 "url":"http://ja.scp-wiki.net/scp-040-JP"
-
                             },
                             "fields": [
                                 {
@@ -70,10 +76,18 @@ class Discord_Logger
                                   "inline":true
                                 }
                               ]
-                            }]}
+                            }
+                        ]
+=end                        
+                    }
             req.body = ts.to_json
+            puts ts.to_json
             @HTTP_Connect.request(req)
+            
         end
+
+        puts res
     end
+
 
 end
