@@ -24,5 +24,24 @@ DisLog = Discord_Logger.new(@url)
 #DisLog.SendingUser("Clowler IL-334")
 DisLog.SetContent(@content)
 DisLog.SetUserName(@userName)
+embedPath = DisLog.EmbedCreate
+puts embedPath
+DisLog.SetEmbedParam(embedPath,"title","TEST_FILE")
+DisLog.SetEmbedParam(embedPath,"description","/home/honoka/hoge/foo")
+DisLog.SetEmbedParam(embedPath,"fields",[
+    {
+        "name": "dat",
+        "value": "40",
+        "inline":true
+    },{
+        "name": "png",
+        "value": "40",
+        "inline":true
+    },{
+        "name": "pak",
+        "value": "40"        
+    }
+
+])
 DisLog.GetParam
 DisLog.Send
