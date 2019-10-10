@@ -16,6 +16,9 @@ OptionParser.new do |opt|
         @userName = val
     }
 
+    opt.on('--NSEND','not send'){|val|
+        @send = 1
+    }
     opt.parse!(ARGV)
 end
 
@@ -28,6 +31,10 @@ embedPath = DisLog.EmbedCreate
 puts embedPath
 DisLog.SetEmbedParam(embedPath,"title","TEST_FILE")
 DisLog.SetEmbedParam(embedPath,"description","/home/honoka/hoge/foo")
+DisLog.SetEmbedParam(embedPath,"footer",{
+    "text":"Editer:BOSS"
+
+})
 DisLog.SetEmbedParam(embedPath,"fields",[
     {
         "name": "dat",
@@ -44,4 +51,7 @@ DisLog.SetEmbedParam(embedPath,"fields",[
 
 ])
 DisLog.GetParam
-DisLog.Send
+#--NSEND true not sending discord server
+if @send != 1 then
+    DisLog.Send
+end
