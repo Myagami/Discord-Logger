@@ -83,10 +83,9 @@ class Discord_Logger
             req.body = ts.to_json
             puts ts.to_json
             @HTTP_Connect.request(req)
-            
+            @@EmbedCon = []
         end
 
-        puts res
     end
 
 
