@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'net/https'
 require 'uri'
 require 'json'
@@ -87,6 +88,4 @@ class Discord_Logger
         end
 
     end
-
-
 end
